@@ -1,17 +1,17 @@
-# dev-static-server
+# static-server-dev
 A simple express server with https, http2, compression and serve-static
 
 ### usage
 
-`npm i dev-static-server`
+`npm i static-server-dev`
 
 or 
 
-`npm i -D dev-static-server`
+`npm i -D static-server-dev`
 
 
 ```js
-const devServer = require("dev-static-server");
+const devServer = require("static-server-dev");
 
 devServer();
 ```
@@ -19,7 +19,7 @@ devServer();
 Thats it... You can also pass options and instantiate the server, so you can, for example close it later from the main thread.
 
 ```js
-const devServer = require("dev-static-server");
+const devServer = require("static-server-dev");
 
 // options, with defauls shown
 const server = devServer({
