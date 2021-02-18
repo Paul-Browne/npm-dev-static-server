@@ -1,0 +1,33 @@
+{
+  "name": "dev-static-server",
+  "version": "1.0.1",
+  "description": "A simple express server with https, http2, compression and serve-static",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "*",
+    "!/test",
+    "!test.js",
+    "!/.git",
+    "!.gitignore"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Paul-Browne/npm-dev-static-server.git"
+  },
+  "author": "Paul Browne",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Paul-Browne/npm-dev-static-server/issues"
+  },
+  "homepage": "https://github.com/Paul-Browne/npm-dev-static-server#readme",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "serve-static": "^1.14.1",
+    "spdy": "^4.0.2",
+    "time-stamped-console-log": "^1.0.2"
+  }
+}
