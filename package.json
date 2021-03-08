@@ -1,6 +1,6 @@
 {
   "name": "static-server-dev",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple express server with https, http2, compression and serve-static",
   "main": "index.js",
   "scripts": {
@@ -17,6 +17,7 @@
     "type": "git",
     "url": "git+https://github.com/Paul-Browne/npm-dev-static-server.git"
   },
+  "keywords": ["static", "server", "express", "compression", "https", "http2", "localhost"],
   "author": "Paul Browne",
   "license": "MIT",
   "bugs": {
