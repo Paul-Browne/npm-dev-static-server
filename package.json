@@ -1,6 +1,6 @@
 {
   "name": "static-server-dev",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "A simple express server with https, http2, compression and serve-static",
   "main": "index.js",
   "scripts": {
@@ -8,6 +8,8 @@
   },
   "files": [
     "*",
+    "!.editorconfig",
+    "!**/*.DS_Store",
     "!/test",
     "!test.js",
     "!/.git",
