@@ -26,7 +26,7 @@ const server = devServer({
 	port: 8888,
 	directory: "public",
 	key: ".ssl/localhost.key",		// path to your local
-	cert: ".ssl/localhost.krt"		// certs and keys to enable https
+	cert: ".ssl/localhost.crt"		// certs and keys to enable https
 });
 
 const closeTheServer = () => {
