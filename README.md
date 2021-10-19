@@ -11,7 +11,7 @@ or
 
 
 ```js
-const devServer = require("static-server-dev");
+import devServer from "static-server-dev";
 
 devServer();
 ```
@@ -19,14 +19,15 @@ devServer();
 Thats it... just go to [localhost:8888](localhost:8888) You can also pass options and instantiate the server, so you can, for example close it later from the main thread.
 
 ```js
-const devServer = require("static-server-dev");
+import devServer from "static-server-dev";
 
 // options, with defaults shown
 const server = devServer({
 	port: 8888,
 	directory: "public",
-	key: ".ssl/localhost.key",	// path to your local
-	cert: ".ssl/localhost.crt"	// certs and keys to enable https
+	cors: true,                 // allow CORS default true
+	key: ".ssl/localhost.key",  // path to your local
+	cert: ".ssl/localhost.crt"  // certs and keys to enable https
 });
 
 const closeTheServer = () => {

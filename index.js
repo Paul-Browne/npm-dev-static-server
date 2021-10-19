@@ -1,17 +1,21 @@
-const tscl = require('time-stamped-console-log');
-const serveStatic = require('serve-static');
-const compression = require('compression');
-//const tryPorts = require('try-ports');
-const express = require('express');
-const http2 = require('spdy');
-const http = require('http');
-const path = require('path');
-const os = require('os');
-const fs = require('fs');
+import { join } from 'path';
+import { homedir } from 'os';
+import { readFile, access } from 'fs/promises';
+import express from 'express';
+import compression from 'compression';
+import { createServer } from 'http';
+import tscl from 'time-stamped-console-log';
+import serveStatic from 'serve-static';
+import spdy from 'spdy';
+import cors from 'cors';
 
-const serverSetup = (protocal, port, directory, sslKeyPath, sslCrtPath) => {
+
+const serverSetup = async (protocal, port, directory, corsAllowed, sslKeyPath, sslCrtPath) => {
     const app = express();
     app.use(compression())
+    if(corsAllowed){
+        app.use(cors());
+    }
     app.use(serveStatic(directory, {
         'extensions': ['html'],
         'maxAge': 3600000   // 1 hour
@@ -22,31 +26,30 @@ const serverSetup = (protocal, port, directory, sslKeyPath, sslCrtPath) => {
         }
     })
     if (protocal === "https") {
-        return http2.createServer({
-            key: fs.readFileSync(path.join(os.homedir(), sslKeyPath), 'utf8'),
-            cert: fs.readFileSync(path.join(os.homedir(), sslCrtPath), 'utf8')
+        return spdy.createServer({
+            key: await readFile(join(homedir(), sslKeyPath), 'utf8'),
+            cert: await readFile(join(homedir(), sslCrtPath), 'utf8')
         }, app).listen(port);
     } else {
-        return http.createServer(app).listen(port);
+        return createServer(app).listen(port);
     }
 }
 
-const startServer = (port, directory, sslKeyPath, sslCrtPath) => {
-    const keyBoolean = fs.existsSync(path.join(os.homedir(), sslKeyPath));
-    const crtBoolean = fs.existsSync(path.join(os.homedir(), sslCrtPath));
-    if(keyBoolean && crtBoolean){
-        return serverSetup("https", port, directory, sslKeyPath, sslCrtPath);
-    }else{
-        return serverSetup("http", port, directory);
+const startServer = async (port, directory, corsAllowed, sslKeyPath, sslCrtPath) => {
+    try {
+        const keyBoolean = await access(join(homedir(), sslKeyPath));
+        const crtBoolean = await access(join(homedir(), sslCrtPath));        
+        return serverSetup("https", port, directory, corsAllowed, sslKeyPath, sslCrtPath);
+    } catch (error) {
+        return serverSetup("http", port, directory, corsAllowed);   
     }
 }
 
-module.exports = opts => {
+export default opts => {
     const port = opts.port || 8888;
     const directory = opts.directory || 'public';
-    const sslKeyPath = opts.key || '.ssl/localhost.key';
-    const sslCrtPath = opts.cert || '.ssl/localhost.crt';
-    //tryPorts(opts.port, _port => {
-    return startServer(port, directory, sslKeyPath, sslCrtPath);
-    //})
+    const sslKeyPath = opts.key || '.ssl/localhost.key.pem';
+    const sslCrtPath = opts.cert || '.ssl/localhost.crt.pem';
+    const corsAllowed = opts.cors || true;
+    return startServer(port, directory, corsAllowed, sslKeyPath, sslCrtPath);
 }

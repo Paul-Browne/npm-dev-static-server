@@ -1,11 +1,6 @@
-const server = require(".");
+import server from "./index.js";
 
-var x = server({
-	port: 8000,
-	directory: "test"
+await server({
+	port: 8001,
+	directory: "test1"
 });
-
-setTimeout(() => {
-    x.close();
-}, 5000)
-
