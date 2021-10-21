@@ -1,6 +1,6 @@
 {
   "name": "static-server-dev",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A simple express server with https, http2, compression and serve-static",
   "main": "index.js",
   "scripts": {

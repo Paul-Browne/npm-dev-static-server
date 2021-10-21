@@ -45,11 +45,11 @@ const startServer = async (port, directory, corsAllowed, sslKeyPath, sslCrtPath)
     }
 }
 
-export default opts => {
+export default async opts => {
     const port = opts.port || 8888;
     const directory = opts.directory || 'public';
     const sslKeyPath = opts.key || '.ssl/localhost.key.pem';
     const sslCrtPath = opts.cert || '.ssl/localhost.crt.pem';
     const corsAllowed = opts.cors || true;
-    return startServer(port, directory, corsAllowed, sslKeyPath, sslCrtPath);
+    return await startServer(port, directory, corsAllowed, sslKeyPath, sslCrtPath);
 }
